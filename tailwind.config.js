@@ -6,7 +6,7 @@ export default {
   ],
   theme: {
     extend: {
-      // ডিফল্ট কালারগুলোকে Hex কোডে সেট করা হচ্ছে যাতে oklch জেনারেট না হয়
+      // ডিফল্ট কালারগুলোকে Hex কোডে ওভাররাইড করা হচ্ছে যাতে oklch তৈরি না হয়
       colors: {
         slate: {
           50: '#f8fafc',
@@ -22,6 +22,7 @@ export default {
           950: '#020617',
         },
         blue: {
+          50: '#eff6ff',
           500: '#3b82f6',
           600: '#2563eb',
           700: '#1d4ed8',
@@ -30,4 +31,12 @@ export default {
     },
   },
   plugins: [],
+}
+module.exports = {
+  theme: {
+    extend: {},
+  },
+  experimental: {
+    optimizeUniversalDefaults: false,
+  },
 }

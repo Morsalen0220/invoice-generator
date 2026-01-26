@@ -24,3 +24,17 @@ body {
   }
   .no-print { display: none !important; }
 }
+#invoice-capture {
+  width: 210mm;
+  min-height: 297mm;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+/* মোবাইলে প্রিভিউ দেখার জন্য এটি সাহায্য করবে */
+@media (max-width: 768px) {
+  #invoice-capture {
+    /* প্রিভিউতে ছোট দেখাবে কিন্তু ডাটায় পরিবর্তন হবে না */
+    transform-origin: top center;
+  }
+}
