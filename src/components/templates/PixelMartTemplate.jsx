@@ -7,7 +7,7 @@ const PixelMartTemplate = forwardRef(({ data }, ref) => {
   const total = subtotal + taxAmount - discount;
 
   return (
-    <div ref={ref} className="bg-white a4-print-fix flex flex-col mx-auto relative text-slate-800 font-sans overflow-hidden" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}>
+    <div ref={ref} className="bg-white a4-page a4-print-fix flex flex-col mx-auto relative text-slate-800 font-sans overflow-hidden" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}>
       
       {/* --- TOP HEADER: BRANDING & LOGO ONLY --- */}
       <header className="flex justify-between items-center px-12 pt-12 pb-6 border-b-2 border-slate-100">

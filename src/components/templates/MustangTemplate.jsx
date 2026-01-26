@@ -11,7 +11,7 @@ const MustangTemplate = forwardRef(({ data }, ref) => {
   const pyClass = isCompact ? 'py-1.5' : 'py-4';
 
   return (
-    <div ref={ref} id="invoice-capture" className="bg-white a4-print-fix flex flex-col mx-auto relative text-[#231f20] font-sans overflow-hidden" style={{ width: '210mm', minHeight: '297mm', padding: '0', boxSizing: 'border-box' }}>
+    <div ref={ref} id="invoice-capture" className="bg-white a4-page a4-print-fix flex flex-col mx-auto relative text-[#231f20] font-sans overflow-hidden" style={{ width: '210mm', minHeight: '297mm', padding: '0', boxSizing: 'border-box' }}>
       
       {/* --- TOP HEADER: BRANDING & CONTACT --- */}
       <header className="px-12 py-4 border-b border-slate-100">

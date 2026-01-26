@@ -7,7 +7,7 @@ const ModernTemplate = forwardRef(({ data }, ref) => {
   return (
     <div 
       ref={ref}
-      className="bg-white a4-print-fix flex flex-col mx-auto relative overflow-hidden" 
+      className=" a4-page bg-white a4-print-fix flex flex-col mx-auto relative overflow-hidden" 
       style={{ width: '210mm', minHeight: '297mm', padding: '0', boxSizing: 'border-box' }}
     >
       {/* Premium Header */}

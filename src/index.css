@@ -38,3 +38,18 @@ body {
     transform-origin: top center;
   }
 }
+/* A4 Page Standard Layout */
+.a4-page {
+  width: 794px;         /* A4 Width at 96 DPI */
+  min-height: 1123px;   /* A4 Height at 96 DPI */
+  background: white;
+  margin: 0 auto;
+  box-sizing: border-box;
+  color: black;         /* PDF-এ টেক্সট কালার নিশ্চিত করতে */
+}
+
+/* পিডিএফ তৈরির সময় স্ক্রলবার বা বাড়তি মার্জিন এড়াতে */
+#invoice-pdf {
+  padding: 0;
+  margin: 0;
+}

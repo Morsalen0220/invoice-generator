@@ -1,116 +1,144 @@
 import React, { forwardRef } from 'react';
 
 const OrangeTemplate = forwardRef(({ data }, ref) => {
+  // ক্যালকুলেশন
   const subtotal = data.items.reduce((sum, item) => sum + (Number(item.qty) * Number(item.price)), 0);
   const taxAmount = (subtotal * (Number(data.tax) || 0)) / 100;
   const total = subtotal + taxAmount;
 
   return (
-    <div ref={ref} className="bg-white a4-print-fix flex flex-col mx-auto relative text-slate-800 font-sans overflow-hidden" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}>
+    <div 
+      ref={ref} 
+      className="a4-page bg-white flex flex-col relative text-slate-800 font-sans"
+    >
       {/* Header Accent */}
-      <div className="relative h-32 w-full overflow-hidden">
-        <div className="absolute top-0 left-0 w-[45%] h-full bg-[#2c3e50]" style={{ clipPath: 'polygon(0 0, 100% 0, 85% 100%, 0% 100%)' }}></div>
-        <div className="absolute top-0 right-0 w-[65%] h-full bg-gradient-to-r from-[#ff4d00] to-[#ff8c00]" style={{ clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)' }}>
+      <div className="relative h-32 w-full overflow-hidden shrink-0">
+        <div 
+          className="absolute top-0 left-0 w-[45%] h-full bg-[#2c3e50]" 
+          style={{ clipPath: 'polygon(0 0, 100% 0, 85% 100%, 0% 100%)' }}
+        ></div>
+        <div 
+          className="absolute top-0 right-0 w-[65%] h-full bg-gradient-to-r from-[#ff4d00] to-[#ff8c00]" 
+          style={{ clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)' }}
+        >
           <div className="h-full flex flex-col justify-center items-end pr-16 text-white text-right">
-            <span className="text-2xl font-black uppercase tracking-tight">{data.brandName}</span>
-            <p className="text-[9px] font-bold tracking-[0.3em] uppercase opacity-80 mt-1">{data.tagline}</p>
+            <span className="text-2xl font-black uppercase tracking-tight">
+              {data.brandName || "BRAND NAME"}
+            </span>
+            <p className="text-[9px] font-bold tracking-[0.3em] uppercase opacity-80 mt-1">
+              {data.tagline || "TAGLINE SPACE HERE"}
+            </p>
           </div>
         </div>
-        <h1 className="absolute top-8 left-16 text-5xl font-black tracking-widest text-[#2c3e50] z-10 leading-none uppercase italic">INVOICE</h1>
+        <h1 className="absolute top-8 left-16 text-5xl font-black tracking-widest text-white z-10 leading-none uppercase italic">
+          INVOICE
+        </h1>
       </div>
 
-      {/* Info Section */}
-      <div className="px-16 pt-6 pb-6 grid grid-cols-2 gap-10">
-        <div>
-          <h3 className="text-xl font-black text-[#2c3e50] mb-1 italic underline underline-offset-4 decoration-[#ff4d00]">Invoice to:</h3>
-          <p className="text-lg font-black text-slate-800 uppercase leading-tight">{data.client}</p>
-          <p className="text-[11px] text-slate-500 font-medium mt-1 leading-relaxed whitespace-pre-line">{data.clientAddress}</p>
-        </div>
-        <div className="flex flex-col justify-center items-end text-right">
-          <div className="grid grid-cols-2 gap-x-8 gap-y-1">
-            <span className="text-sm font-black text-[#2c3e50] uppercase">Invoice#</span> <span className="text-sm font-bold text-slate-600 tracking-widest">{data.invoiceNo}</span>
-            <span className="text-sm font-black text-[#2c3e50] uppercase">Date</span> <span className="text-sm font-bold text-slate-600 tracking-widest">{data.date}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Item Table */}
-      <div className="px-16 flex-1">
-        <table className="w-full">
-          <thead>
-            <tr className="border-2 border-[#ff4d00] bg-white text-left">
-              <th className="py-2 px-4 text-sm font-black text-[#2c3e50] w-12 border-r-2 border-[#ff4d00]">SL.</th>
-              <th className="py-2 px-4 text-sm font-black text-[#2c3e50]">Item Description</th>
-              <th className="py-2 px-4 text-center text-sm font-black text-[#2c3e50] w-28">Price</th>
-              <th className="py-2 px-4 text-center text-sm font-black text-[#2c3e50] w-20">Qty.</th>
-              <th className="py-2 px-4 text-right text-sm font-black text-[#2c3e50] w-32">Total</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-200">
-            {data.items.map((item, index) => (
-              <tr key={item.id}>
-                <td className="py-4 px-4 text-center text-sm font-bold text-slate-600">{index + 1}</td>
-                <td className="py-4 px-4 text-sm font-bold text-slate-700">{item.desc || "Service/Product"}</td>
-                <td className="py-4 px-4 text-center text-sm font-bold text-slate-600">{data.currency}{Number(item.price).toLocaleString()}</td>
-                <td className="py-4 px-4 text-center text-sm font-bold text-slate-600">{item.qty}</td>
-                <td className="py-4 px-4 text-right text-sm font-bold text-slate-800">{data.currency}{(Number(item.qty) * Number(item.price)).toLocaleString()}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Payment, Terms & Total */}
-      <div className="px-16 py-6 grid grid-cols-2 gap-10 border-t border-slate-100 mt-2">
-        <div className="space-y-6">
-          <p className="text-xs font-black text-[#2c3e50] italic uppercase">Thank you for your business</p>
-          
-          {data.showPayment && (
-          <div>
-            <h4 className="text-xs font-black text-[#2c3e50] mb-2 uppercase tracking-widest border-l-2 border-[#ff4d00] pl-2">Payment Info:</h4>
-            <div className="text-[10px] space-y-1 font-bold text-slate-500">
-              <div className="grid grid-cols-[80px_1fr]"><span>Account #:</span> <span className="text-slate-800">{data.accountNo}</span></div>
-              <div className="grid grid-cols-[80px_1fr]"><span>A/C Name:</span> <span className="text-slate-800">{data.accountName}</span></div>
-              <div className="grid grid-cols-[80px_1fr]"><span>Bank Details:</span> <span className="text-slate-800">{data.bankDetails}</span></div>
+      {/* Main Content Area */}
+      <div className="flex-1 px-16 py-10 flex flex-col">
+        {/* Info Section */}
+        <div className="flex justify-between items-start mb-12">
+          <div className="space-y-4">
+            <div>
+              <p className="text-[10px] font-black uppercase text-[#ff4d00] tracking-widest mb-1">Invoice To</p>
+              <h2 className="text-xl font-bold text-[#2c3e50] uppercase tracking-tight">{data.client || "Client Name"}</h2>
+              <p className="text-[10px] font-medium text-slate-500 mt-1 w-48 leading-relaxed">
+                {data.clientAddress || "Street Address, City, Country"}
+              </p>
             </div>
           </div>
-          )}
-          {data.showTerms && (
-  <div className="mt-4">
-    <h4 className="text-xs font-black text-[#2c3e50] mb-1 uppercase tracking-widest border-l-2 border-[#ff4d00] pl-2">Terms & Conditions</h4>
-    <p className="text-[10px] text-slate-500 font-medium leading-relaxed max-w-xs">{data.terms}</p>
-  </div>
-)}
-        </div>
-
-        <div className="flex flex-col items-end">
-          <div className="w-56 space-y-3 mb-8">
-            <div className="flex justify-between text-sm"><span>Sub Total:</span> <span className="font-bold">{data.currency}{subtotal.toLocaleString()}</span></div>
-            <div className="flex justify-between text-sm border-b-2 border-[#2c3e50] pb-2"><span>Tax:</span> <span className="font-bold">{(Number(data.tax) || 0).toFixed(2)}%</span></div>
-            <div className="flex justify-between text-xl font-black text-[#2c3e50] italic pt-1"><span>Total:</span> <span>{data.currency}{total.toLocaleString()}</span></div>
-
-            {/* Signature Area */}
-            <div className="pt-12 text-center w-full flex flex-col items-center">
-              <div className="h-12 flex items-center justify-center mb-1">
-                {data.sigType === 'draw' && data.signature ? (
-                  <img src={data.signature} alt="Sign" className="max-h-full" />
-                ) : (
-                  <span style={{ fontFamily: "'Dancing Script', cursive" }} className="text-3xl text-[#2c3e50] leading-none">{data.sigText}</span>
-                )}
+          <div className="text-right">
+            <div className="bg-slate-50 p-4 border-r-4 border-[#ff4d00]">
+              <p className="text-[9px] font-black uppercase text-slate-400 tracking-widest">Invoice Number</p>
+              <p className="text-lg font-bold text-[#2c3e50]">#{data.invoiceNo || "00001"}</p>
+              <div className="mt-2 pt-2 border-t border-slate-200">
+                <p className="text-[9px] font-black uppercase text-slate-400 tracking-widest">Date Issued</p>
+                <p className="text-sm font-bold text-[#2c3e50]">{data.date}</p>
               </div>
-              <div className="border-t border-slate-400 w-full"></div>
-              <span className="text-[10px] font-black text-[#2c3e50] uppercase tracking-widest italic">Authorised Sign</span>
             </div>
+          </div>
+        </div>
+
+        {/* Items Table */}
+        <div className="flex-1">
+          <table className="w-full">
+            <thead>
+              <tr className="bg-[#2c3e50] text-white">
+                <th className="px-6 py-3 text-left text-[10px] font-black uppercase tracking-widest">Description</th>
+                <th className="px-6 py-3 text-center text-[10px] font-black uppercase tracking-widest w-24">Qty</th>
+                <th className="px-6 py-3 text-right text-[10px] font-black uppercase tracking-widest w-32">Price</th>
+                <th className="px-6 py-3 text-right text-[10px] font-black uppercase tracking-widest w-32">Total</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 border-x border-slate-100">
+              {data.items.map((item, index) => (
+                <tr key={index} className="hover:bg-slate-50/50">
+                  <td className="px-6 py-4">
+                    <p className="text-sm font-bold text-[#2c3e50]">{item.desc || "Item Description"}</p>
+                  </td>
+                  <td className="px-6 py-4 text-center text-sm font-medium text-slate-600">{item.qty}</td>
+                  <td className="px-6 py-4 text-right text-sm font-medium text-slate-600">
+                    {data.currency}{Number(item.price).toFixed(2)}
+                  </td>
+                  <td className="px-6 py-4 text-right text-sm font-bold text-[#2c3e50]">
+                    {data.currency}{(item.qty * item.price).toFixed(2)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Totals Section */}
+        <div className="mt-8 flex justify-end">
+          <div className="w-64 space-y-2">
+            <div className="flex justify-between text-sm px-2">
+              <span className="font-bold text-slate-400 uppercase tracking-tighter">Subtotal</span>
+              <span className="font-bold text-[#2c3e50]">{data.currency}{subtotal.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between text-sm px-2">
+              <span className="font-bold text-slate-400 uppercase tracking-tighter text-xs">Tax ({data.tax}%)</span>
+              <span className="font-bold text-[#ff4d00]">{data.currency}{taxAmount.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between bg-gradient-to-r from-[#2c3e50] to-[#34495e] text-white p-4 rounded-l-2xl shadow-lg">
+              <span className="font-black uppercase tracking-widest">Grand Total</span>
+              <span className="text-xl font-black">{data.currency}{total.toFixed(2)}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer/Signature */}
+        <div className="mt-16 flex justify-between items-end">
+          <div className="space-y-4">
+            {data.showPayment && (
+              <div className="bg-slate-50 p-4 rounded-xl border-l-4 border-slate-200">
+                <p className="text-[10px] font-black uppercase text-[#2c3e50] tracking-widest mb-2 underline decoration-[#ff4d00]">Payment Info</p>
+                <div className="space-y-1">
+                  <p className="text-[10px] font-bold text-slate-600 capitalize">Acc Name: {data.accountName || "N/A"}</p>
+                  <p className="text-[10px] font-bold text-slate-600">Acc No: {data.accountNo || "N/A"}</p>
+                  <p className="text-[10px] font-bold text-slate-600 capitalize">Bank: {data.bankDetails || "N/A"}</p>
+                </div>
+              </div>
+            )}
+          </div>
+          
+          <div className="text-center w-48">
+             {data.signature && (
+               <img src={data.signature} alt="Signature" className="h-12 mx-auto mb-2 object-contain" />
+             )}
+             <div className="border-t-2 border-[#2c3e50] pt-2">
+                <p className="text-[10px] font-black uppercase text-[#2c3e50] tracking-[0.2em]">Authorized Sign</p>
+             </div>
           </div>
         </div>
       </div>
 
-      <div className="h-8 w-full relative">
-        <div className="absolute bottom-0 left-0 w-[45%] h-full bg-[#2c3e50]" style={{ clipPath: 'polygon(0 0, 85% 0, 100% 100%, 0% 100%)' }}></div>
-        <div className="absolute bottom-0 right-0 w-[65%] h-full bg-[#ff4d00]" style={{ clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)' }}></div>
-      </div>
+      {/* Footer Accent */}
+      <div className="h-2 w-full bg-[#2c3e50] shrink-0"></div>
     </div>
   );
 });
 
+OrangeTemplate.displayName = 'OrangeTemplate';
 export default OrangeTemplate;

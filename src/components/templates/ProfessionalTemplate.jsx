@@ -6,7 +6,7 @@ const ProfessionalTemplate = forwardRef(({ data }, ref) => {
   const total = subtotal + taxAmount;
 
   return (
-    <div ref={ref} className="bg-white a4-print-fix flex flex-col mx-auto relative text-slate-800" style={{ width: '210mm', minHeight: '297mm', padding: '15mm', boxSizing: 'border-box' }}>
+    <div ref={ref} className="bg-white a4-page a4-print-fix flex flex-col mx-auto relative text-slate-800" style={{ width: '210mm', minHeight: '297mm', padding: '15mm', boxSizing: 'border-box' }}>
       <div className="absolute top-0 left-0 w-full h-3 bg-emerald-600"></div>
       
       <header className="flex justify-between items-start mb-12 mt-4">
