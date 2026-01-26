@@ -18,7 +18,10 @@ const initialData = {
   items: [{ id: Date.now(), desc: '', qty: 1, price: 0 }],
   tax: 0, currency: '$', logo: '', logoSize: 60,
   showPayment: true, showTerms: true,
-  accountNo: '', accountName: '', bankDetails: '', terms: '', signature: ''
+  accountNo: '', accountName: '', bankDetails: '', terms: '', signature: '',    // ড্রয়িং এর জন্য
+  sigText: '',      // টাইপ করা টেক্সটের জন্য
+  sigType: 'draw',  // 'draw' অথবা 'text'
+  sigFont: "'Dancing Script', cursive" // ডিফল্ট ফন্ট
 };
 
 export default function App() {

@@ -92,6 +92,29 @@ export default function InvoiceForm({ data, setData }) {
     </div>
   </div>
 
+
+
+{/* এখানে Invoice No এবং Date ইনপুট যোগ করা হয়েছে */}
+  <div className="grid grid-cols-2 gap-2">
+    <div className="space-y-1">
+      <label className="text-[9px] font-bold text-slate-600 uppercase ml-1">Invoice No</label>
+      <input name="invoiceNo" value={data.invoiceNo} onChange={handleChange} className={inputStyle} placeholder="INV-001" />
+    </div>
+    <div className="space-y-1">
+      <label className="text-[9px] font-bold text-slate-600 uppercase ml-1">Date</label>
+      <input type="date" name="date" value={data.date} onChange={handleChange} className={inputStyle} />
+    </div>
+  </div>
+
+  <div className="space-y-1">
+    <label className="text-[9px] font-bold text-slate-600 uppercase ml-1">Upload Logo URL</label>
+    <input name="logo" value={data.logo} onChange={handleChange} className={inputStyle} placeholder="https://logo-url.com/image.png" />
+  </div>
+
+
+
+
+
   {/* Contact Info */}
   <div className="grid grid-cols-2 gap-2">
     <input name="phone" value={data.phone || ''} onChange={handleChange} className={inputStyle} placeholder="Phone Number" />

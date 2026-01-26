@@ -39,13 +39,24 @@ body {
   }
 }
 /* A4 Page Standard Layout */
+/* A4 Page Layout for Preview and PDF */
 .a4-page {
-  width: 794px;         /* A4 Width at 96 DPI */
-  min-height: 1123px;   /* A4 Height at 96 DPI */
-  background: white;
+  width: 794px !important;    /* A4 Width at 96 DPI */
+  height: 1123px !important;   /* A4 Height at 96 DPI */
+  background-color: white !important;
+  color: black !important;
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
   box-sizing: border-box;
-  color: black;         /* PDF-এ টেক্সট কালার নিশ্চিত করতে */
+  overflow: hidden;
+  position: relative;
+}
+
+/* PDF তৈরির সময় শ্যাডো এবং বর্ডার রিমুভ করতে */
+.no-shadow {
+  box-shadow: none !important;
+  border: none !important;
 }
 
 /* পিডিএফ তৈরির সময় স্ক্রলবার বা বাড়তি মার্জিন এড়াতে */

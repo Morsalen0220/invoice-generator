@@ -124,13 +124,17 @@ const OrangeTemplate = forwardRef(({ data }, ref) => {
           </div>
           
           <div className="text-center w-48">
-             {data.signature && (
-               <img src={data.signature} alt="Signature" className="h-12 mx-auto mb-2 object-contain" />
-             )}
-             <div className="border-t-2 border-[#2c3e50] pt-2">
-                <p className="text-[10px] font-black uppercase text-[#2c3e50] tracking-[0.2em]">Authorized Sign</p>
-             </div>
-          </div>
+  {data.sigType === 'draw' ? (
+    data.signature && <img src={data.signature} alt="Signature" className="h-12 mx-auto mb-2 object-contain" />
+  ) : (
+    <p style={{ fontFamily: data.sigFont }} className="text-2xl text-[#2c3e50] mb-2">
+      {data.sigText}
+    </p>
+  )}
+  <div className="border-t-2 border-[#2c3e50] pt-2">
+    <p className="text-[10px] font-black uppercase tracking-[0.2em]">Authorized Sign</p>
+  </div>
+</div>
         </div>
       </div>
 
