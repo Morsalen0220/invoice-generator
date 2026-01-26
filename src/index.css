@@ -1,66 +1,26 @@
-
-
-/* সব সিগনেচার ফন্ট একসাথে ইম্পোর্ট করা হলো */
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&family=Great+Vibes&family=Sacramento&family=Allura&display=swap');
-@font-face {
-    font-family: 'BasniStudio';
-    src: url('https://db.onlinewebfonts.com/t/17224213693247043329944696116853.ttf') format('truetype');
-}
 @import "tailwindcss";
-@media print {
-  @page {
-    size: A4;
-    margin: 0 !important; /* ব্রাউজারের সাদা বর্ডার পুরোপুরি রিমুভ করবে */
-  }
-  
-  body {
-    margin: 0 !important;
-    padding: 0 !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
 
-  /* প্রিন্ট হওয়ার সময় ডিজাইনটি যেন ১:১ স্কেলে থাকে */
-  .a4-print-fix {
+/* Google Fonts instead of problematic online fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@700&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media print {
+  @page { size: A4; margin: 0 !important; }
+  body { 
+    margin: 0 !important; 
+    -webkit-print-color-adjust: exact !important; 
+    print-color-adjust: exact !important; 
+  }
+  #invoice-capture {
     width: 210mm !important;
     height: 297mm !important;
-    transform: scale(1) !important; 
+    transform: scale(1) !important;
     margin: 0 !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    box-sizing: border-box !important;
+    box-shadow: none !important;
   }
-
-  .no-print {
-    display: none !important;
-  }
-}
-
-/* কাস্টম স্ক্রলবার (Sidebar-এর জন্য) */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
-}
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-item {
-  animation: fadeIn 0.3s ease-out forwards;
-}
-@keyframes bounce-subtle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
-}
-
-.group-hover\:animate-bounce {
-  animation: bounce-subtle 0.8s infinite;
+  .no-print { display: none !important; }
 }
