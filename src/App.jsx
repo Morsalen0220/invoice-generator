@@ -41,8 +41,23 @@ useEffect(() => {
   const [selectedTemplate, setSelectedTemplate] = useState('orange'); 
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const componentRef = useRef();
-  const handlePrint = useReactToPrint({ contentRef: componentRef, documentTitle: `Invoice_${data.invoiceNo}` });
 
+
+  
+  const handlePrint = useReactToPrint({ contentRef: componentRef, documentTitle: `Invoice_${data.invoiceNo}` });
+const handleDownload = () => {
+  const element = document.getElementById('invoice-capture'); // আপনার ইনভয়েস টেমপ্লেটের ID
+  const options = {
+    margin: 10,
+    filename: `invoice_${data.invoiceNo || '001'}.pdf`,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+
+  // সরাসরি ডাউনলোড শুরু হবে
+  html2pdf().from(element).set(options).save();
+};
   return (
     <div className="min-h-screen bg-[#0b1120] flex flex-col font-sans text-slate-200 relative overflow-x-hidden">
       <nav className="fixed top-0 left-0 w-full z-50 bg-slate-900/60 backdrop-blur-xl border-b border-white/5 p-4 flex justify-between items-center md:hidden no-print">
@@ -103,6 +118,13 @@ useEffect(() => {
     <Download size={18} className="group-hover:-translate-y-1 transition-transform duration-300" />
     <span className="tracking-[0.1em]">PDF</span>
   </button>
+
+  <button 
+  onClick={handleDownload} 
+  className="flex items-center gap-2 bg-blue-600 p-3 rounded-xl text-white font-bold"
+>
+  Download PDF
+</button>
 </div>
       {isEditorOpen && <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[55] md:hidden" onClick={() => setIsEditorOpen(false)}></div>}
     </div>

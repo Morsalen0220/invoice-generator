@@ -19,118 +19,86 @@ export default function InvoiceForm({ data, setData }) {
   return (
     <div className="space-y-8 pb-10">
       {/* 1. Header & Branding */}
-      <section className="space-y-4">
-
-
-
-
-
-
-
-<label className={labelStyle}><Building2 size={12}/> Branding & Company Info</label>
+  {/* 1. Header & Branding */}
+<section className="space-y-4">
+  <label className={labelStyle}><Building2 size={12}/> Branding & Company Info</label>
   
-  {/* Logo Upload Section */}
-  <div className="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10">
-    <div className="w-16 h-16 bg-slate-950 rounded-lg border border-white/10 flex items-center justify-center overflow-hidden relative group">
-      {data.logo ? (
-        <img src={data.logo} alt="Logo" className="w-full h-full object-contain" />
-      ) : (
-        <Plus className="text-slate-600" />
-      )}
-      <input 
-        type="file" 
-        onChange={(e) => {
-          const file = e.target.files[0];
-          const reader = new FileReader();
-          reader.onloadend = () => setData({ ...data, logo: reader.result });
-          if (file) reader.readAsDataURL(file);
-        }} 
-        className="absolute inset-0 opacity-0 cursor-pointer" 
-        accept="image/*"
-      />
-    </div>
-
-{/* Logo Upload & Size Control */}
-<div className="space-y-4">
-  <label className={labelStyle}><Building2 size={12}/> Logo & Size</label>
-  <div className="flex flex-col gap-4 bg-slate-900/50 p-4 rounded-xl border border-white/5">
-    <input 
-      type="text" 
-      name="logo" 
-      value={data.logo} 
-      onChange={handleChange} 
-      className={inputStyle} 
-      placeholder="Logo URL (or Base64)" 
-    />
-    
-    <div className="space-y-2">
-      <div className="flex justify-between items-center">
-        <span className="text-[10px] text-slate-400 font-bold uppercase">Logo Size</span>
-        <span className="text-[10px] text-blue-500 font-bold">{data.logoSize || 60}px</span>
+  <div className="flex flex-col md:flex-row gap-6 bg-white/5 p-4 rounded-xl border border-white/10">
+    {/* Logo Upload & Size Control */}
+    <div className="space-y-4">
+      <div className="w-24 h-24 bg-slate-950 rounded-lg border border-white/10 flex items-center justify-center overflow-hidden relative group mx-auto">
+        {data.logo ? (
+          <img 
+            src={data.logo} 
+            alt="Logo" 
+            style={{ width: `${data.logoSize || 60}px` }} 
+            className="object-contain transition-all" 
+          />
+        ) : (
+          <Plus className="text-slate-600" />
+        )}
+        <input 
+          type="file" 
+          onChange={(e) => {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onloadend = () => setData({ ...data, logo: reader.result });
+            if (file) reader.readAsDataURL(file);
+          }} 
+          className="absolute inset-0 opacity-0 cursor-pointer" 
+          accept="image/*"
+        />
       </div>
-      <input 
-        type="range" 
-        min="40" 
-        max="200" 
-        value={data.logoSize || 60} 
-        onChange={(e) => setData({...data, logoSize: Number(e.target.value)})}
-        className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-600"
-      />
+      
+      {/* Logo Size Slider */}
+      <div className="space-y-1.5">
+        <div className="flex justify-between items-center">
+          <span className="text-[9px] text-slate-500 font-bold uppercase">Size</span>
+          <span className="text-[9px] text-blue-500 font-bold">{data.logoSize || 60}px</span>
+        </div>
+        <input 
+          type="range" 
+          min="30" 
+          max="150" 
+          value={data.logoSize || 60} 
+          onChange={(e) => setData({...data, logoSize: Number(e.target.value)})}
+          className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-600"
+        />
+      </div>
+    </div>
+
+    {/* Brand & Slogan Inputs */}
+    <div className="flex-1 space-y-3">
+      <div>
+        <label className="text-[9px] text-slate-500 font-bold uppercase mb-1 block">Company Name</label>
+        <input 
+          name="brandName" 
+          value={data.brandName || ''} 
+          onChange={handleChange} 
+          className={inputStyle} 
+          placeholder="e.g. PixelMart" 
+        />
+      </div>
+      <div>
+        <label className="text-[9px] text-slate-500 font-bold uppercase mb-1 block">Slogan</label>
+        <input 
+          name="tagline" 
+          value={data.tagline || ''} 
+          onChange={handleChange} 
+          className={inputStyle} 
+          placeholder="e.g. Your Vision, Our Code" 
+        />
+      </div>
     </div>
   </div>
-</div>
 
-    <div className="flex-1 space-y-2">
-      <input name="brandName" value={data.brandName} onChange={handleChange} className={inputStyle} placeholder="Brand Name" />
-      <input name="tagline" value={data.tagline} onChange={handleChange} className={inputStyle} placeholder="Tagline" />
-    </div>
-  </div>
-
-  {/* Company Contact Info Inputs */}
+  {/* Contact Info */}
   <div className="grid grid-cols-2 gap-2">
-    <input name="phone" value={data.phone} onChange={handleChange} className={inputStyle} placeholder="Phone Number" />
-    <input name="website" value={data.website} onChange={handleChange} className={inputStyle} placeholder="Website URL" />
+    <input name="phone" value={data.phone || ''} onChange={handleChange} className={inputStyle} placeholder="Phone Number" />
+    <input name="website" value={data.website || ''} onChange={handleChange} className={inputStyle} placeholder="Website URL" />
   </div>
-  <input name="address" value={data.address} onChange={handleChange} className={inputStyle} placeholder="Company Location/Address" />
-
-
-
-
-
-
-
-
-        <label className={labelStyle}><Building2 size={12}/> Branding</label>
-        <div className="grid grid-cols-2 gap-2">
-            <input name="brandName" value={data.brandName} onChange={handleChange} className={inputStyle} placeholder="Brand Name" />
-            <input name="tagline" value={data.tagline} onChange={handleChange} className={inputStyle} placeholder="Tagline" />
-            <input 
-  name="sender" 
-  value={data.sender} 
-  onChange={handleChange} 
-  className={inputStyle} 
-  placeholder="Sender Name/Company" 
-/>
-        </div>
-        <div className="bg-white/5 p-4 rounded-xl border border-white/10 mt-4">
-  <label className={labelStyle}>Currency</label>
-  <select 
-    name="currency" 
-    value={data.currency} 
-    onChange={handleChange} 
-    className={inputStyle}
-  >
-    <option value="$">USD ($)</option>
-    <option value="৳">BDT (৳)</option>
-    <option value="€">EUR (€)</option>
-    <option value="₹">INR (₹)</option>
-  </select>
-</div>
-        <div className="grid grid-cols-2 gap-2">
-            <input name="invoiceNo" value={data.invoiceNo} onChange={handleChange} className={inputStyle} placeholder="Invoice #" />
-            <input name="date" value={data.date} onChange={handleChange} className={inputStyle} placeholder="Date" />
-        </div>
-      </section>
+  <input name="address" value={data.address || ''} onChange={handleChange} className={inputStyle} placeholder="Full Address" />
+</section>
 
       {/* 2. Client Info */}
       <section className="space-y-4 pt-4 border-t border-white/5">
