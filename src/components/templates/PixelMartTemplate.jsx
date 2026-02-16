@@ -41,7 +41,7 @@ const PixelMartTemplate = forwardRef(({ data }, ref) => {
           <p className="text-[11px] font-bold text-[#00c853] uppercase mb-4">Manager, Company Name</p>
           <div className="text-[11px] font-bold text-slate-500 space-y-1">
              <p>{data.clientAddress.split('\n')[0]}</p>
-             <p>P : +000 1234 5678</p>
+             <p>P : {data.phone || '+000 1234 5678'}</p>
           </div>
         </div>
 
@@ -52,7 +52,7 @@ const PixelMartTemplate = forwardRef(({ data }, ref) => {
           </div>
           <div className="space-y-1.5">
              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Date: <span className="text-slate-900 ml-4">{data.date}</span></p>
-             <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Account No: <span className="text-slate-900 ml-4">280090</span></p>
+             <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Account No: <span className="text-slate-900 ml-4">{data.accountNo || '280090'}</span></p>
           </div>
         </div>
       </div>
@@ -145,7 +145,7 @@ const PixelMartTemplate = forwardRef(({ data }, ref) => {
          <div className="absolute bottom-0 left-0 w-full h-[70%] bg-[#1f2937] flex items-center px-12 gap-8 text-white z-10">
             <div className="flex items-center gap-2">
                 <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center text-[#1f2937] text-[11px]">📞</div>
-                <span className="text-[10px] font-bold tracking-wider">+000 1234 6789</span>
+                <span className="text-[10px] font-bold tracking-wider">{data.phone || '+000 1234 6789'}</span>
             </div>
             <div className="flex items-center gap-2">
                 <div className="w-6 h-6 bg-[#00c853] rounded-full flex items-center justify-center text-white text-[11px]">🌐</div>
