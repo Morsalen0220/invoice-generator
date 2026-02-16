@@ -56,7 +56,7 @@ const MustangTemplate = forwardRef(({ data }, ref) => {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[#92c83e] text-[9px] uppercase tracking-tighter">Mail:</span>
-                <p className="lowercase text-[#231f20]">{data.website || "mustang@email.com"}</p>
+                <p className="lowercase text-[#231f20]">{data.email || "mustang@email.com"}</p>
               </div>
             </div>
             <div className="text-right max-w-[200px] leading-[1.4] flex flex-col justify-center">
@@ -82,7 +82,7 @@ const MustangTemplate = forwardRef(({ data }, ref) => {
             </h3>
             <div className="space-y-1">
               <p className="text-[11px] font-bold text-slate-400">ID: 123-45G-789459</p>
-              <p className="text-[12px] font-bold text-[#92c83e] italic">{data.website || "www.discoverind.com"}</p>
+              <p className="text-[12px] font-bold text-[#92c83e] italic">{data.clientEmail || "client@email.com"}</p>
               <p className="text-[11px] text-slate-600 font-bold leading-normal mt-1 uppercase opacity-90 whitespace-pre-line">
                 {data.clientAddress || "24 Dummy Street Area, Location"}
               </p>
