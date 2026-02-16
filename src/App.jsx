@@ -14,9 +14,9 @@ import { Download, Edit3, X, Printer, LayoutTemplate, Check } from 'lucide-react
 const initialData = {
   brandName: '', tagline: '', invoiceNo: 'INV-001', 
   date: new Date().toISOString().split('T')[0], 
-  client: '', clientAddress: '', phone: '', website: '', address: '',
+  client: '', clientAddress: '', clientEmail: '', phone: '', email: '', website: '', address: '',
   items: [{ id: Date.now(), desc: '', qty: 1, price: 0 }],
-  tax: 0, currency: '$', logo: '', logoSize: 60,
+  tax: 0, adjustmentType: 'tax', currency: '$', logo: '', logoSize: 60,
   showPayment: true, showTerms: true,
   accountNo: '', accountName: '', bankDetails: '', terms: '', signature: '',    // ড্রয়িং এর জন্য
   sigText: '',      // টাইপ করা টেক্সটের জন্য

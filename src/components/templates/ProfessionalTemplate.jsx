@@ -2,8 +2,10 @@ import React, { forwardRef } from 'react';
 
 const ProfessionalTemplate = forwardRef(({ data }, ref) => {
   const subtotal = data.items.reduce((sum, item) => sum + (item.qty * item.price), 0);
-  const taxAmount = (subtotal * (data.tax || 0) / 100);
-  const total = subtotal + taxAmount;
+  const rate = Number(data.tax) || 0;
+  const isDiscount = data.adjustmentType === 'discount';
+  const adjustmentAmount = (subtotal * rate) / 100;
+  const total = isDiscount ? subtotal - adjustmentAmount : subtotal + adjustmentAmount;
 
   return (
     <div ref={ref} className="bg-white a4-page a4-print-fix flex flex-col mx-auto relative text-slate-800" style={{ width: '210mm', minHeight: '297mm', padding: '15mm', boxSizing: 'border-box' }}>
@@ -87,8 +89,8 @@ const ProfessionalTemplate = forwardRef(({ data }, ref) => {
             <span>{data.currency}{subtotal.toLocaleString()}</span>
           </div>
           <div className="flex justify-between text-xs font-bold text-slate-500 uppercase border-b border-slate-100 pb-2">
-            <span>Tax ({data.tax}%):</span>
-            <span>{data.currency}{taxAmount.toLocaleString()}</span>
+            <span>{isDiscount ? `Discount (${rate}%)` : `Tax (${rate}%)`}:</span>
+            <span>{data.currency}{adjustmentAmount.toLocaleString()}</span>
           </div>
           <div className="flex justify-between items-center pt-2">
             <span className="text-sm font-black uppercase text-slate-900">Grand Total:</span>

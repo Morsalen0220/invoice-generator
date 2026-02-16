@@ -2,8 +2,10 @@ import React, { forwardRef } from 'react';
 
 const MinimalBlueTemplate = forwardRef(({ data }, ref) => {
   const subtotal = data.items.reduce((sum, item) => sum + (Number(item.qty) * Number(item.price)), 0);
-  const taxAmount = (subtotal * (Number(data.tax) || 0)) / 100;
-  const total = subtotal + taxAmount;
+  const rate = Number(data.tax) || 0;
+  const isDiscount = data.adjustmentType === 'discount';
+  const adjustmentAmount = (subtotal * rate) / 100;
+  const total = isDiscount ? subtotal - adjustmentAmount : subtotal + adjustmentAmount;
 
   // --- স্মার্ট ডায়নামিক এডজাস্টমেন্ট ---
   const itemCount = data.items.length;
@@ -139,8 +141,8 @@ const MinimalBlueTemplate = forwardRef(({ data }, ref) => {
                 <span className="text-slate-900 font-black">{data.currency}{subtotal.toLocaleString()}</span>
               </div>
               <div className="flex justify-between text-sm font-bold text-slate-600">
-                <span>Tax ({data.tax}%):</span> 
-                <span className="text-slate-900 font-black">{data.currency}{taxAmount.toLocaleString()}</span>
+                <span>{isDiscount ? `Discount (${rate}%)` : `Tax (${rate}%)`}:</span> 
+                <span className="text-slate-900 font-black">{data.currency}{adjustmentAmount.toLocaleString()}</span>
               </div>
               <div className="border-t-2 border-[#231f20] my-3"></div>
               <div className="flex justify-between text-2xl font-black text-[#231f20]">

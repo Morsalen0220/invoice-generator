@@ -2,8 +2,10 @@ import React, { forwardRef } from 'react';
 
 const MustangTemplate = forwardRef(({ data }, ref) => {
   const subtotal = data.items.reduce((sum, item) => sum + (Number(item.qty) * Number(item.price)), 0);
-  const taxAmount = (subtotal * (Number(data.tax) || 0)) / 100;
-  const total = subtotal + taxAmount;
+  const rate = Number(data.tax) || 0;
+  const isDiscount = data.adjustmentType === 'discount';
+  const adjustmentAmount = (subtotal * rate) / 100;
+  const total = isDiscount ? subtotal - adjustmentAmount : subtotal + adjustmentAmount;
 
   // ডায়নামিক এডজাস্টমেন্ট - আইটেম বেশি হলে রো প্যাডিং অ্যাডজাস্ট হবে
   const itemCount = data.items.length;
@@ -56,7 +58,7 @@ const MustangTemplate = forwardRef(({ data }, ref) => {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[#92c83e] text-[9px] uppercase tracking-tighter">Mail:</span>
-                <p className="lowercase text-[#231f20]">{data.website || "mustang@email.com"}</p>
+                <p className="lowercase text-[#231f20]">{data.email || "mustang@email.com"}</p>
               </div>
             </div>
             <div className="text-right max-w-[200px] leading-[1.4] flex flex-col justify-center">
@@ -82,7 +84,7 @@ const MustangTemplate = forwardRef(({ data }, ref) => {
             </h3>
             <div className="space-y-1">
               <p className="text-[11px] font-bold text-slate-400">ID: 123-45G-789459</p>
-              <p className="text-[12px] font-bold text-[#92c83e] italic">{data.website || "www.discoverind.com"}</p>
+              <p className="text-[12px] font-bold text-[#92c83e] italic">{data.clientEmail || "client@email.com"}</p>
               <p className="text-[11px] text-slate-600 font-bold leading-normal mt-1 uppercase opacity-90 whitespace-pre-line">
                 {data.clientAddress || "24 Dummy Street Area, Location"}
               </p>
@@ -196,8 +198,8 @@ const MustangTemplate = forwardRef(({ data }, ref) => {
                 <span className="text-slate-800">{data.currency}{subtotal.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
               </div>
               <div className="flex justify-between text-[12px] font-[1000] uppercase">
-                <span className="text-slate-800 tracking-tight">Tax {data.tax}%</span>
-                <span className="text-slate-800">{data.currency}{taxAmount.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
+                <span className="text-slate-800 tracking-tight">{isDiscount ? `Discount ${rate}%` : `Tax ${rate}%`}</span>
+                <span className="text-slate-800">{data.currency}{adjustmentAmount.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
               </div>
             </div>
             

@@ -19,7 +19,6 @@ export default function InvoiceForm({ data, setData }) {
   return (
     <div className="space-y-8 pb-10">
       {/* 1. Header & Branding */}
-  {/* 1. Header & Branding */}
 <section className="space-y-4">
   <label className={labelStyle}><Building2 size={12}/> Branding & Company Info</label>
   
@@ -92,9 +91,7 @@ export default function InvoiceForm({ data, setData }) {
     </div>
   </div>
 
-
-
-{/* এখানে Invoice No এবং Date ইনপুট যোগ করা হয়েছে */}
+  {/* Invoice Number and Date */}
   <div className="grid grid-cols-2 gap-2">
     <div className="space-y-1">
       <label className="text-[9px] font-bold text-slate-600 uppercase ml-1">Invoice No</label>
@@ -118,8 +115,9 @@ export default function InvoiceForm({ data, setData }) {
   {/* Contact Info */}
   <div className="grid grid-cols-2 gap-2">
     <input name="phone" value={data.phone || ''} onChange={handleChange} className={inputStyle} placeholder="Phone Number" />
-    <input name="website" value={data.website || ''} onChange={handleChange} className={inputStyle} placeholder="Website URL" />
+    <input name="email" value={data.email || ''} onChange={handleChange} className={inputStyle} placeholder="Company Email" />
   </div>
+  <input name="website" value={data.website || ''} onChange={handleChange} className={inputStyle} placeholder="Website URL" />
   <input name="address" value={data.address || ''} onChange={handleChange} className={inputStyle} placeholder="Full Address" />
 </section>
 
@@ -127,6 +125,7 @@ export default function InvoiceForm({ data, setData }) {
       <section className="space-y-4 pt-4 border-t border-white/5">
         <label className={labelStyle}><User size={12}/> Client Details</label>
         <input name="client" value={data.client} onChange={handleChange} className={inputStyle} placeholder="Client Name" />
+        <input name="clientEmail" value={data.clientEmail || ''} onChange={handleChange} className={inputStyle} placeholder="Client Email" />
         <textarea name="clientAddress" value={data.clientAddress} onChange={handleChange} className={`${inputStyle} h-24 resize-none`} placeholder="Full Address..." />
       </section>
 
@@ -218,7 +217,7 @@ export default function InvoiceForm({ data, setData }) {
 
 
 
-{/* Payment Details section-er agey */}
+{/* Payment Details */}
 <div className="flex items-center justify-between mb-2">
   <label className={labelStyle}><CreditCard size={12}/> Payment Details</label>
   <button 
@@ -238,7 +237,7 @@ export default function InvoiceForm({ data, setData }) {
   </div>
 )}
 
-{/* Terms & Conditions section-er agey */}
+{/* Terms & Conditions */}
 <div className="flex items-center justify-between mt-4 mb-2 pt-4 border-t border-white/5">
   <label className={labelStyle}><ScrollText size={12}/> Terms & Conditions</label>
   <button 
@@ -252,29 +251,29 @@ export default function InvoiceForm({ data, setData }) {
   <textarea name="terms" value={data.terms} onChange={handleChange} className={`${inputStyle} h-20 resize-none animate-in fade-in duration-300`} placeholder="Terms..." />
 )}
 
-      {/* 4. Payment Info */}
-      <section className="space-y-4 pt-4 border-t border-white/5">
-        <label className={labelStyle}><CreditCard size={12}/> Payment Details</label>
-        <div className="grid grid-cols-2 gap-2">
-            <input name="accountNo" value={data.accountNo} onChange={handleChange} className={inputStyle} placeholder="Account #" />
-            <input name="accountName" value={data.accountName} onChange={handleChange} className={inputStyle} placeholder="A/C Name" />
-        </div>
-        <input name="bankDetails" value={data.bankDetails} onChange={handleChange} className={inputStyle} placeholder="Bank Details" />
-      </section>
-
-      {/* 5. Authorised Signature */}
+      {/* 4. Authorised Signature */}
       <section className="space-y-4 pt-4 border-t border-white/5">
         <label className={labelStyle}><PenTool size={12}/> Authorised Signature</label>
         <SignaturePad data={data} setData={setData} />
       </section>
 
-      {/* 6. Terms & Tax */}
+      {/* 5. Tax / Discount */}
       <section className="pt-4 border-t border-white/5 space-y-4">
-        <label className={labelStyle}><ScrollText size={12}/> Terms & Conditions</label>
-        <textarea name="terms" value={data.terms} onChange={handleChange} className={`${inputStyle} h-20 resize-none`} placeholder="Terms..." />
-        <div className="bg-blue-600/5 p-4 rounded-xl border border-blue-600/10 flex items-center gap-3">
-            <span className="text-[10px] font-black text-slate-500 uppercase">Tax %</span>
-            <input type="number" name="tax" value={data.tax} onChange={handleChange} className={`${inputStyle} !bg-slate-900 border-blue-600/20`} />
+        <label className={labelStyle}><ScrollText size={12}/> Tax / Discount Settings</label>
+        <div className="bg-blue-600/5 p-4 rounded-xl border border-blue-600/10 space-y-3">
+            <div className="grid grid-cols-2 gap-2">
+              <select
+                name="adjustmentType"
+                value={data.adjustmentType || 'tax'}
+                onChange={handleChange}
+                className={`${inputStyle} !bg-slate-900 border-blue-600/20`}
+              >
+                <option value="tax">Tax</option>
+                <option value="discount">Discount</option>
+              </select>
+              <input type="number" name="tax" value={data.tax} onChange={handleChange} className={`${inputStyle} !bg-slate-900 border-blue-600/20`} placeholder="Rate %" />
+            </div>
+            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wide">Choose tax or discount and set percentage rate.</p>
         </div>
       </section>
     </div>

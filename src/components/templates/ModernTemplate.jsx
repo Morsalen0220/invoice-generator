@@ -2,7 +2,10 @@ import React, { forwardRef } from 'react';
 
 const ModernTemplate = forwardRef(({ data }, ref) => {
   const subtotal = data.items.reduce((sum, item) => sum + (item.qty * item.price), 0);
-  const total = subtotal + (subtotal * (data.tax || 0) / 100);
+  const rate = Number(data.tax) || 0;
+  const isDiscount = data.adjustmentType === 'discount';
+  const adjustmentAmount = (subtotal * rate) / 100;
+  const total = isDiscount ? subtotal - adjustmentAmount : subtotal + adjustmentAmount;
 
   return (
     <div 
@@ -99,8 +102,8 @@ const ModernTemplate = forwardRef(({ data }, ref) => {
       <span>{data.currency}{subtotal.toLocaleString()}</span>
     </div>
     <div className="flex justify-between text-slate-400 text-[10px] font-bold uppercase">
-      <span>Tax ({data.tax}%)</span>
-      <span>{data.currency}{(subtotal * data.tax / 100).toLocaleString()}</span>
+      <span>{isDiscount ? `Discount (${rate}%)` : `Tax (${rate}%)`}</span>
+      <span>{data.currency}{adjustmentAmount.toLocaleString()}</span>
     </div>
   </div>
   <div className="flex justify-between items-center text-white">
