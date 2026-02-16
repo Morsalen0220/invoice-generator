@@ -2,8 +2,10 @@ import React, { forwardRef } from 'react';
 
 const MustangTemplate = forwardRef(({ data }, ref) => {
   const subtotal = data.items.reduce((sum, item) => sum + (Number(item.qty) * Number(item.price)), 0);
-  const taxAmount = (subtotal * (Number(data.tax) || 0)) / 100;
-  const total = subtotal + taxAmount;
+  const rate = Number(data.tax) || 0;
+  const isDiscount = data.adjustmentType === 'discount';
+  const adjustmentAmount = (subtotal * rate) / 100;
+  const total = isDiscount ? subtotal - adjustmentAmount : subtotal + adjustmentAmount;
 
   // ডায়নামিক এডজাস্টমেন্ট - আইটেম বেশি হলে রো প্যাডিং অ্যাডজাস্ট হবে
   const itemCount = data.items.length;
@@ -196,8 +198,8 @@ const MustangTemplate = forwardRef(({ data }, ref) => {
                 <span className="text-slate-800">{data.currency}{subtotal.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
               </div>
               <div className="flex justify-between text-[12px] font-[1000] uppercase">
-                <span className="text-slate-800 tracking-tight">Tax {data.tax}%</span>
-                <span className="text-slate-800">{data.currency}{taxAmount.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
+                <span className="text-slate-800 tracking-tight">{isDiscount ? `Discount ${rate}%` : `Tax ${rate}%`}</span>
+                <span className="text-slate-800">{data.currency}{adjustmentAmount.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
               </div>
             </div>
             

@@ -257,12 +257,23 @@ export default function InvoiceForm({ data, setData }) {
         <SignaturePad data={data} setData={setData} />
       </section>
 
-      {/* 5. Tax */}
+      {/* 5. Tax / Discount */}
       <section className="pt-4 border-t border-white/5 space-y-4">
-        <label className={labelStyle}><ScrollText size={12}/> Tax Settings</label>
-        <div className="bg-blue-600/5 p-4 rounded-xl border border-blue-600/10 flex items-center gap-3">
-            <span className="text-[10px] font-black text-slate-500 uppercase">Tax %</span>
-            <input type="number" name="tax" value={data.tax} onChange={handleChange} className={`${inputStyle} !bg-slate-900 border-blue-600/20`} />
+        <label className={labelStyle}><ScrollText size={12}/> Tax / Discount Settings</label>
+        <div className="bg-blue-600/5 p-4 rounded-xl border border-blue-600/10 space-y-3">
+            <div className="grid grid-cols-2 gap-2">
+              <select
+                name="adjustmentType"
+                value={data.adjustmentType || 'tax'}
+                onChange={handleChange}
+                className={`${inputStyle} !bg-slate-900 border-blue-600/20`}
+              >
+                <option value="tax">Tax</option>
+                <option value="discount">Discount</option>
+              </select>
+              <input type="number" name="tax" value={data.tax} onChange={handleChange} className={`${inputStyle} !bg-slate-900 border-blue-600/20`} placeholder="Rate %" />
+            </div>
+            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wide">Choose tax or discount and set percentage rate.</p>
         </div>
       </section>
     </div>

@@ -3,8 +3,10 @@ import React, { forwardRef } from 'react';
 const OrangeTemplate = forwardRef(({ data }, ref) => {
   // ক্যালকুলেশন
   const subtotal = data.items.reduce((sum, item) => sum + (Number(item.qty) * Number(item.price)), 0);
-  const taxAmount = (subtotal * (Number(data.tax) || 0)) / 100;
-  const total = subtotal + taxAmount;
+  const rate = Number(data.tax) || 0;
+  const isDiscount = data.adjustmentType === 'discount';
+  const adjustmentAmount = (subtotal * rate) / 100;
+  const total = isDiscount ? subtotal - adjustmentAmount : subtotal + adjustmentAmount;
 
   return (
     <div 
@@ -98,8 +100,8 @@ const OrangeTemplate = forwardRef(({ data }, ref) => {
               <span className="font-bold text-[#2c3e50]">{data.currency}{subtotal.toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-sm px-2">
-              <span className="font-bold text-slate-400 uppercase tracking-tighter text-xs">Tax ({data.tax}%)</span>
-              <span className="font-bold text-[#ff4d00]">{data.currency}{taxAmount.toFixed(2)}</span>
+              <span className="font-bold text-slate-400 uppercase tracking-tighter text-xs">{isDiscount ? `Discount (${rate}%)` : `Tax (${rate}%)`}</span>
+              <span className="font-bold text-[#ff4d00]">{data.currency}{adjustmentAmount.toFixed(2)}</span>
             </div>
             <div className="flex justify-between bg-gradient-to-r from-[#2c3e50] to-[#34495e] text-white p-4 rounded-l-2xl shadow-lg">
               <span className="font-black uppercase tracking-widest">Grand Total</span>

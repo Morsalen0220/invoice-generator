@@ -2,9 +2,10 @@ import React, { forwardRef } from 'react';
 
 const PixelMartTemplate = forwardRef(({ data }, ref) => {
   const subtotal = data.items.reduce((sum, item) => sum + (Number(item.qty) * Number(item.price)), 0);
-  const taxAmount = (subtotal * (Number(data.tax) || 0)) / 100;
-  const discount = (subtotal * 5) / 100; 
-  const total = subtotal + taxAmount - discount;
+  const rate = Number(data.tax) || 0;
+  const isDiscount = data.adjustmentType === 'discount';
+  const adjustmentAmount = (subtotal * rate) / 100;
+  const total = isDiscount ? subtotal - adjustmentAmount : subtotal + adjustmentAmount;
 
   return (
     <div ref={ref} className="bg-white a4-page a4-print-fix flex flex-col mx-auto relative text-slate-800 font-sans overflow-hidden" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}>
@@ -127,8 +128,8 @@ const PixelMartTemplate = forwardRef(({ data }, ref) => {
                 <span className="text-slate-900 font-black">{data.currency}{subtotal.toLocaleString()}</span>
               </div>
               <div className="flex justify-between text-[11px] font-bold text-slate-400 uppercase tracking-widest border-b border-slate-200 pb-2">
-                <span>Tax {data.tax}%</span>
-                <span className="text-slate-900 font-black">{data.currency}{taxAmount.toLocaleString()}</span>
+                <span>{isDiscount ? `Discount ${rate}%` : `Tax ${rate}%`}</span>
+                <span className="text-slate-900 font-black">{data.currency}{adjustmentAmount.toLocaleString()}</span>
               </div>
             </div>
             
@@ -149,11 +150,11 @@ const PixelMartTemplate = forwardRef(({ data }, ref) => {
             </div>
             <div className="flex items-center gap-2">
                 <div className="w-6 h-6 bg-[#00c853] rounded-full flex items-center justify-center text-white text-[11px]">🌐</div>
-                <span className="text-[10px] font-bold tracking-wider">urwebsitename.com</span>
+                <span className="text-[10px] font-bold tracking-wider">{data.website || 'urwebsitename.com'}</span>
             </div>
             <div className="flex items-center gap-2">
                 <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center text-[#1f2937] text-[11px]">📍</div>
-                <span className="text-[10px] font-bold tracking-wider uppercase tracking-tighter">Street Address write Here, 100</span>
+                <span className="text-[10px] font-bold tracking-wider uppercase tracking-tighter">{data.address || 'Street Address write Here, 100'}</span>
             </div>
          </div>
 
